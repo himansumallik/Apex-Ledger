@@ -1,4 +1,4 @@
-# Global Development Bank v2
+# Apex Ledger
 
 A full-stack banking web app where users manage accounts and transactions — and instead of digging through raw transaction lists, they can ask an AI assistant natural-language questions like *"how much did I spend on food last month?"* Built with the MERN stack, with Redis caching for fast, production-realistic reads.
 
