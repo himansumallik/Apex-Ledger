@@ -26,3 +26,19 @@ export const createAccount = async(req, res) =>{
     }
 
 }
+
+export const getAccounts = async(req, res) =>{
+    const userId = req.user._id;
+
+    try{
+        const accounts = await Account.find({userId}).sort({createdAt: -1});
+
+        return res.status(200).json({
+            success: true,
+            count: accounts.length,
+            accounts,
+        })
+    } catch (error){
+        return res.status(500).json({message: error.message});
+    }
+}
