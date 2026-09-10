@@ -46,7 +46,7 @@ export const deposit = async(req,res) => {
     }
 }
 
-const withdraw = async(req, res) => {
+export const withdraw = async(req, res) => {
     const {accountId, amount, category, description} = req.body;
 
     if(!accountId || amount === undefined){
@@ -91,6 +91,37 @@ const withdraw = async(req, res) => {
         })
     } catch (error) {
         return res.status(400).json({message: error.message});
+    }
+
+}
+
+export const getTransactions = async(req, res) => {
+    const {accountId} = req.params;
+
+    if(!accountId){
+        return res.status(400).json({message: 'Account ID is required'});
+    }
+
+    try {
+        const account = await Account.findById(accountId);
+        
+        if(!account){
+            return res.status(404).json({message: 'Account not found'})
+        }
+
+        if(account.userId.toString() != req.user._id.toString()){
+            return res.status(403).json({message: 'Not authorized to access this account'});
+        }
+
+        const transactions = await Transaction.find({ accountId }).sort({ date: -1 });
+
+        return res.status(200).json({
+            success: true,
+            count: transactions.length,
+            transactions,
+        })
+    } catch (error) {
+        return res.status(500).json({message: error.message});
     }
 
 }
