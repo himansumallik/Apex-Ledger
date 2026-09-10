@@ -45,3 +45,52 @@ export const deposit = async(req,res) => {
         return res.status(400).json({message: error.message});
     }
 }
+
+const withdraw = async(req, res) => {
+    const {accountId, amount, category, description} = req.body;
+
+    if(!accountId || amount === undefined){
+        return res.status(400).json({message: 'Account ID and Amount is required'});
+    }
+
+    const numericAmount = Number(amount);
+    if (isNaN(numericAmount) || numericAmount <= 0) {
+        return res.status(400).json({ message: 'Amount must be a positive number' });
+    }
+
+    try {
+        const account = await Account.findById(accountId);
+
+        if(!account){
+            return res.status(404).json({message: 'Account not found'})
+        }
+
+        if(account.userId.toString() != req.user._id.toString()){
+            return res.status(403).json({message: 'Not authorized to access this account'});
+        }
+
+        if(account.balance < numericAmount){
+            return res.status(400).json({message: 'Insufficient funds'});
+        }
+
+        account.balance -= Number(numericAmount);
+        await account.save();
+
+        const newTransaction = await Transaction.create({
+            accountId: account._id,
+            amount: numericAmount,
+            type: 'withdrawal',
+            category: category || 'others',
+            description: description || '',
+        })
+
+        return res.status(201).json({
+            "message": "Withdraw successful",
+            "balance": account.balance,
+            "transaction": newTransaction,
+        })
+    } catch (error) {
+        return res.status(400).json({message: error.message});
+    }
+
+}
