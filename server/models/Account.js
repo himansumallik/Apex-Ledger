@@ -12,7 +12,7 @@ const accountSchema = new mongoose.Schema(
             required: [true, 'Account type is required'],
             enum: {
                 values: ['checking', 'savings', 'credit', 'investment'],
-                message: 'VALUE is not a valid account type',
+                message: '{VALUE} is not a valid account type',
             },
             lowercase: true,
             trim: true,
