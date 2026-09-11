@@ -74,7 +74,7 @@ React talks to the Express backend over HTTP. The backend is the single hub: it 
 
 ```bash
 # Clone the repo
-git clone <your-repo-url>
+git clone https://github.com/himansumallik/Apex-Ledger.git
 cd global-bank-v2
 
 # Install backend dependencies
