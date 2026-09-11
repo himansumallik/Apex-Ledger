@@ -7,8 +7,8 @@ A full-stack banking web app where users manage accounts and transactions — an
 ## Features
 
 - [x] User authentication (JWT-based signup/login)
-- [ ] Account management (create checking/savings accounts, view balance)
-- [ ] Transactions (deposit, withdraw, categorized transaction history)
+- [x] Account management (create checking/savings accounts, view balance)
+- [x] Transactions (deposit, withdraw, categorized transaction history)
 - [ ] AI-powered spending assistant (ask natural-language questions about your finances)
 - [ ] Redis caching (fast balance & transaction-history reads)
 
@@ -96,7 +96,7 @@ npm run dev
 - [x] Data model design
 - [x] Backend: Express server + MongoDB connection
 - [x] Backend: Auth (signup/login)
-- [ ] Backend: Account & transaction CRUD
+- [x] Backend: Account & transaction CRUD
 - [ ] Frontend: React UI for auth, accounts, transactions
 - [ ] AI chat assistant integration
 - [ ] Redis caching layer
