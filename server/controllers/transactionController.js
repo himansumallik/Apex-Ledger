@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import Transaction from "../models/Transaction";
-import Account from "../models/Account";
+import Transaction from "../models/Transaction.js";
+import Account from "../models/Account.js";
 
 export const deposit = async(req,res) => {
     const {amount, description, category, accountId} = req.body;
@@ -18,6 +18,7 @@ export const deposit = async(req,res) => {
         const account = await Account.findById(accountId);
 
         if(!account){
+            console.log('Account not found for deposit:', accountId);
             return res.status(404).json({message: 'Account not found'})
         }
 
@@ -79,7 +80,7 @@ export const withdraw = async(req, res) => {
         const newTransaction = await Transaction.create({
             accountId: account._id,
             amount: numericAmount,
-            type: 'withdrawal',
+            type: 'withdrawl',
             category: category || 'others',
             description: description || '',
         })
