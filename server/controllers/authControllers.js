@@ -29,7 +29,7 @@ export const signup = async(req, res) =>{
                 id: newUser._id,
                 name: newUser.name,
                 email: newUser.email,
-            }
+            } 
         });
 
     } catch (error) {
