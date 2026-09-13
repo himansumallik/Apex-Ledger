@@ -16,6 +16,7 @@ export const Login =  () => {
 
     const handleSubmit = async(e) =>{
         e.preventDefault();
+        console.log("Submit triggered! Payload:", { email, password });
 
         try {
             setLoading(true);
@@ -27,9 +28,13 @@ export const Login =  () => {
             login(response.data.token, response.data.user);
             navigate('/dashboard');
         } catch (error) {
-            const errMsg = error.response?.data?.message || 'Login failed';
+            console.dir(error);
+            console.log("Status code:", error.response?.status);
+            console.log("Server response:", error.response?.data);
+            console.log("Error message:", error.message);
+            
+            const errMsg = error.response?.data?.message || error.message || 'Login failed';
             setError(errMsg); 
-            console.error(errMsg);
         }finally{
             setLoading(false);
         }
@@ -56,11 +61,12 @@ export const Login =  () => {
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <button 
                     type="submit"
-                    disabled = {loading}
+                    disabled={loading}
+                    onClick={() => console.log('Button clicked! Values:', { email, password })}
                 >
                     {loading ? 'Logging in...' : 'Sign In'}
                 </button>
-                <h3>`Don't have an account? {signup}`</h3>
+                <h3>Don't have an account? {signup}</h3>
             </form>
         </>
     )
