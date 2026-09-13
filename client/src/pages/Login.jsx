@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 export const Login =  () => {
 
@@ -10,6 +11,7 @@ export const Login =  () => {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+    const {login} = useAuth();
     const signup = <Link to="/signup">Sign Up</Link>;
 
     const handleSubmit = async(e) =>{
@@ -17,8 +19,12 @@ export const Login =  () => {
 
         try {
             setLoading(true);
-            const response = await axios.post('http://localhost:5000/api/auth/signin', {email, password});
-            localStorage.setItem('token', response.data.token);
+            const response = await axios.post('http://localhost:5000/api/auth/signin', {
+                email, 
+                password
+            });
+
+            login(response.data.token, response.data.user);
             navigate('/dashboard');
         } catch (error) {
             const errMsg = error.response?.data?.message || 'Login failed';
