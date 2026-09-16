@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import api from '../services/api.js';
 import { AccountCard } from '../components/AccountCard.jsx';
+import { TransactionForm } from '../components/TransactionForm.jsx';
 
 export const Dashboard = () => {
     const { user, logout } = useAuth();
@@ -62,6 +63,13 @@ export const Dashboard = () => {
 
         <hr />
 
+        {accounts.length > 0 && (
+            <TransactionForm 
+                accounts={accounts} 
+                onTransactionSuccess={fetchAccounts} 
+            />
+        )}
+
         <section>
             <h2>Your Accounts</h2>
 
@@ -101,6 +109,8 @@ export const Dashboard = () => {
                 ))}
             </div>
             )}
+
+            
         </section>
         </div>
     );
