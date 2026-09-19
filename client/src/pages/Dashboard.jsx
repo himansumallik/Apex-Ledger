@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import api from '../services/api.js';
 import { AccountCard } from '../components/AccountCard.jsx';
 import { TransactionForm } from '../components/TransactionForm.jsx';
+import { Navbar } from '../components/Navbar.jsx';
 
 export const Dashboard = () => {
     const { user, logout } = useAuth();
@@ -85,12 +86,7 @@ export const Dashboard = () => {
 
     return (
         <div>
-            <header>
-                <h1>Dashboard</h1>
-                {user && <p>Welcome, {user.name || user.email}!</p>}
-                <button onClick={handleLogout}>Log Out</button>
-            </header>
-
+            <Navbar/>
             <hr />
 
 
