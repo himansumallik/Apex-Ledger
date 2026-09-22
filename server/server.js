@@ -6,6 +6,8 @@ import User from './models/User.js';
 import authRoutes from './routes/authRoutes.js';
 import accountRoutes from './routes/accountRoutes.js';
 import transactionRoutes from './routes/transactionRoutes.js';
+import aiRoutes from './routes/ai.js';
+import 'dotenv/config';
 
 dotenv.config();
 
@@ -24,6 +26,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/accounts', accountRoutes);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Await DB connection before starting Express
 const startServer = async () => {
