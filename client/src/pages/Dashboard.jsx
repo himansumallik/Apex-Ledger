@@ -5,6 +5,7 @@ import api from '../services/api.js';
 import { AccountCard } from '../components/AccountCard.jsx';
 import { TransactionForm } from '../components/TransactionForm.jsx';
 import { Navbar } from '../components/Navbar.jsx';
+import { ChatAssistant } from '../components/ChatAssistant.jsx';
 
 export const Dashboard = () => {
     const { user } = useAuth();
@@ -249,6 +250,10 @@ export const Dashboard = () => {
                                 ))}
                             </div>
                         )}
+
+                        <div style={{ marginTop: '32px' }}>
+                            <ChatAssistant />
+                        </div>
                     </div>
 
                 </div>
