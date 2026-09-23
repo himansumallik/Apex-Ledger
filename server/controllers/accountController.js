@@ -10,6 +10,9 @@ export const createAccount = async(req, res) =>{
 
 
     try {
+
+        const userId = req.user._id;
+        
         const newAccount = await Account.create({
             userId: req.user._id,
             accountType,
@@ -17,12 +20,19 @@ export const createAccount = async(req, res) =>{
             balance: 0.0,
         });
 
+        await newAccount.save();
+
+        const cacheKey = `accounts:${userId}`;
+        await redis.del(cacheKey);
+        console.log('Cache invalidated (Account Created):', cacheKey);
+
         res.status(201).json({
             message: 'Account created successfully',
             account: newAccount
         })
 
     } catch (error) {
+        console.error('Create Account Error:', error);
         return res.status(400).json({message: error.message});
     }
 

@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 import Transaction from "../models/Transaction.js";
 import Account from "../models/Account.js";
+import redis from "../config/redis.js"; // <-- Import Redis client
 
 export const deposit = async(req,res) => {
     const {amount, description, category, accountId} = req.body;
+    
 
     if( !accountId || !amount){
         return res.status(400).json({message: 'Account Id and Amount are required'});
@@ -36,6 +38,10 @@ export const deposit = async(req,res) => {
             category: category || 'others',
             description: description,
         })
+
+        const cacheKey = `accounts:${account.userId}`;
+        await redis.del(cacheKey);
+        console.log(`Cache invalidated on deposit:`, cacheKey);
 
         return res.status(201).json({
             "message": "Deposit successful",
@@ -84,6 +90,10 @@ export const withdraw = async(req, res) => {
             category: category || 'others',
             description: description || '',
         })
+
+        const cacheKey = `accounts:${account.userId}`;
+        await redis.del(cacheKey);
+        console.log('Cache invalidated on withdrawal:', cacheKey);
 
         return res.status(201).json({
             "message": "Withdraw successful",
