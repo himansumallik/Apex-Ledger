@@ -25,9 +25,16 @@ export const Dashboard = () => {
         try {
             setTxLoading(true);
             const response = await api.get(`/transactions/${selectedAccountId}`);
-            setTransactions(response.data);
+            
+            // Safely extract the transaction array whether it's raw or wrapped in an object
+            const txData = Array.isArray(response.data) 
+                ? response.data 
+                : response.data.transactions || response.data.data || [];
+
+            setTransactions(txData);
         } catch (err) {
             console.error('Failed to fetch transactions:', err);
+            setTransactions([]); // Fallback to empty array on error
         } finally {
             setTxLoading(false);
         }
@@ -38,10 +45,16 @@ export const Dashboard = () => {
             setLoading(true);
             setError('');
             const response = await api.get('/accounts');
-            setAccounts(response.data);
+            
+            // Extract the accounts array from the response object wrapper safely
+            const fetchedAccounts = Array.isArray(response.data) 
+                ? response.data 
+                : response.data.accounts || response.data.data || [];
+                
+            setAccounts(fetchedAccounts);
 
-            if (response.data.length > 0 && !selectedAccountId) {
-                setSelectedAccountId(response.data[0]._id);
+            if (fetchedAccounts.length > 0 && !selectedAccountId) {
+                setSelectedAccountId(fetchedAccounts[0]._id);
             }
         } catch (err) {
             console.error('Failed to fetch accounts:', err);
@@ -100,7 +113,7 @@ export const Dashboard = () => {
                 {/* Main Content Grid */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
 
-                    {/* Accounts Card Section */}
+                    {/* 1. Accounts Card Section */}
                     <div style={{ backgroundColor: '#ffffff', borderRadius: '12px', padding: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', border: '1px solid #e5e7eb' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                             <h2 style={{ fontSize: '20px', fontWeight: '700', color: '#111827', margin: 0 }}>
@@ -166,7 +179,7 @@ export const Dashboard = () => {
                         )}
                     </div>
 
-                    {/* Transaction Form Section */}
+                    {/* 2. Transaction Form Section (Deposit / Withdraw) */}
                     {accounts.length > 0 && (
                         <div style={{ backgroundColor: '#ffffff', borderRadius: '12px', padding: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', border: '1px solid #e5e7eb' }}>
                             <TransactionForm 
@@ -176,7 +189,7 @@ export const Dashboard = () => {
                         </div>
                     )}
 
-                    {/* Transaction History Section */}
+                    {/* 3. Transaction History Section */}
                     <div style={{ backgroundColor: '#ffffff', borderRadius: '12px', padding: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', border: '1px solid #e5e7eb' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
                             <h2 style={{ fontSize: '20px', fontWeight: '700', color: '#111827', margin: 0 }}>

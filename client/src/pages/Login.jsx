@@ -232,32 +232,75 @@ export const Login = () => {
                         {loading ? 'Signing in...' : 'Sign In'}
                     </button>
 
-                    {/* Quick Demo Test Logins Helper */}
+                    {/* Professional Demo Quick-Access Panel */}
                     <div style={{
-                        marginTop: '20px',
-                        padding: '12px',
-                        backgroundColor: '#f9fafb',
-                        border: '1px dashed #d1d5db',
-                        borderRadius: '8px',
-                        fontSize: '12px',
-                        color: '#4b5563',
-                        textAlign: 'center'
+                        marginTop: '24px',
+                        padding: '16px',
+                        backgroundColor: '#f8fafc',
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '10px',
+                        fontSize: '13px',
+                        color: '#475569'
                     }}>
-                        <p style={{ fontWeight: '600', margin: '0 0 6px 0' }}>⚡ Quick Test Fill:</p>
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                            <span style={{ fontWeight: '600', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <span>⚡</span> Quick Demo Access
+                            </span>
+                            <span style={{ fontSize: '11px', backgroundColor: '#e0f2fe', color: '#0369a1', padding: '2px 8px', borderRadius: '12px', fontWeight: '500' }}>
+                                Role Testing
+                            </span>
+                        </div>
+                        <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 12px 0', lineHeight: '1.4' }}>
+                            Click a profile below to instantly test different RBAC security permissions:
+                        </p>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                             <button 
                                 type="button"
-                                onClick={() => { setEmail('admin@apex.com'); setPassword(''); }}
-                                style={{ padding: '4px 8px', backgroundColor: '#1f2937', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                                onClick={() => { 
+                                    setEmail('admin@apex.com'); 
+                                    setPassword('yourAdminPassword'); 
+                                }}
+                                style={{
+                                    padding: '8px 12px',
+                                    backgroundColor: '#ffffff',
+                                    color: '#1e293b',
+                                    border: '1px solid #cbd5e1',
+                                    borderRadius: '6px',
+                                    cursor: 'pointer',
+                                    fontWeight: '500',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '6px',
+                                    transition: 'all 0.2s',
+                                    boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
+                                }}
                             >
-                                Admin Demo
+                                <span>👑</span> Admin Mode
                             </button>
                             <button 
                                 type="button"
-                                onClick={() => { setEmail('user@apex.com'); setPassword(''); }}
-                                style={{ padding: '4px 8px', backgroundColor: '#e5e7eb', color: '#1f2937', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                                onClick={() => { 
+                                    setEmail('user@apex.com'); 
+                                    setPassword('yourUserPassword'); 
+                                }}
+                                style={{
+                                    padding: '8px 12px',
+                                    backgroundColor: '#ffffff',
+                                    color: '#1e293b',
+                                    border: '1px solid #cbd5e1',
+                                    borderRadius: '6px',
+                                    cursor: 'pointer',
+                                    fontWeight: '500',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '6px',
+                                    transition: 'all 0.2s',
+                                    boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
+                                }}
                             >
-                                User Demo
+                                <span>👤</span> User Mode
                             </button>
                         </div>
                     </div>
