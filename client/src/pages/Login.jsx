@@ -24,8 +24,17 @@ export const Login = () => {
                 password
             });
 
-            login(response.data.token, response.data.user);
-            navigate('/dashboard');
+            const { token, user } = response.data;
+
+            // Save auth data via AuthContext / localStorage
+            login(token, user);
+
+            // SMART ROLE-BASED REDIRECTION
+            if (user.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/dashboard');
+            }
         } catch (err) {
             console.dir(err);
             console.log("Status code:", err.response?.status);
@@ -104,7 +113,7 @@ export const Login = () => {
                     {/* Feature Highlights */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '15px' }}>
-                            <span style={{ color: '#4ade80', fontWeight: 'bold' }}>✓</span> Secure JWT Authentication & Interceptors
+                            <span style={{ color: '#4ade80', fontWeight: 'bold' }}>✓</span> Secure JWT Authentication & RBAC
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '15px' }}>
                             <span style={{ color: '#4ade80', fontWeight: 'bold' }}>✓</span> Real-time account balance synchronization
@@ -206,7 +215,6 @@ export const Login = () => {
                     <button 
                         type="submit"
                         disabled={loading}
-                        onClick={() => console.log('Button clicked! Values:', { email, password })}
                         style={{
                             width: '100%',
                             padding: '12px 16px',
@@ -224,7 +232,37 @@ export const Login = () => {
                         {loading ? 'Signing in...' : 'Sign In'}
                     </button>
 
-                    <div style={{ marginTop: '24px', textAlign: 'center', fontSize: '14px', color: '#6b7280' }}>
+                    {/* Quick Demo Test Logins Helper */}
+                    <div style={{
+                        marginTop: '20px',
+                        padding: '12px',
+                        backgroundColor: '#f9fafb',
+                        border: '1px dashed #d1d5db',
+                        borderRadius: '8px',
+                        fontSize: '12px',
+                        color: '#4b5563',
+                        textAlign: 'center'
+                    }}>
+                        <p style={{ fontWeight: '600', margin: '0 0 6px 0' }}>⚡ Quick Test Fill:</p>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                            <button 
+                                type="button"
+                                onClick={() => { setEmail('admin@apex.com'); setPassword(''); }}
+                                style={{ padding: '4px 8px', backgroundColor: '#1f2937', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                            >
+                                Admin Demo
+                            </button>
+                            <button 
+                                type="button"
+                                onClick={() => { setEmail('user@apex.com'); setPassword(''); }}
+                                style={{ padding: '4px 8px', backgroundColor: '#e5e7eb', color: '#1f2937', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                            >
+                                User Demo
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style={{ marginTop: '20px', textAlign: 'center', fontSize: '14px', color: '#6b7280' }}>
                         <span>Don't have an account? {signup}</span>
                     </div>
                 </form>
