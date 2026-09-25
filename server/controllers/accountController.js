@@ -72,3 +72,12 @@ export const getAccounts = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
+export const adminDashboard = async (req, res) => {
+    try {
+        // Only admins can reach this block!
+        res.json({ message: 'Welcome to the secret admin inner circle.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+}
