@@ -20,8 +20,11 @@ export const signup = async(req, res) =>{
         const newUser = await User.create({
             name, 
             email, 
-            password: hashPassword
+            password: hashPassword,
+            role: 'user' // Default role is 'user'
         });
+
+        await newUser.save();
 
         return res.status(201).json({
             message: `User registered successfully`,
