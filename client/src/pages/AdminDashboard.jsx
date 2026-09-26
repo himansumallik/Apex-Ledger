@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
 
 export const AdminDashboard = () => {
     const [data, setData] = useState(null);
@@ -13,9 +13,10 @@ export const AdminDashboard = () => {
     useEffect(() => {
         const fetchAdminData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/admin/dashboard', {
+                const response = await api.get('/admin/dashboard', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
+                
                 setData(response.data);
             } catch (err) {
                 console.error('Admin Dashboard Fetch Error:', err);

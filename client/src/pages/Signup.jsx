@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 
 export const Signup = () => {
     const [name, setName] = useState('');
@@ -18,7 +18,7 @@ export const Signup = () => {
 
         try {
             setLoading(true);
-            const response = await axios.post('http://localhost:5000/api/auth/signup', { name, email, password });
+            const response = await api.post('/auth/signup', { name, email, password });
 
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
