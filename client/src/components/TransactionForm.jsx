@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "../services/api";
+import api from '../services/api.js';
 
 export const TransactionForm = ({ accounts, onTransactionSuccess }) => {
     const [selectedAccountId, setSelectedAccountId] = useState(accounts[0]?._id || '');
