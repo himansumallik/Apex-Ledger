@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import api from '../utils/api';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -19,10 +20,7 @@ export const Login = () => {
 
         try {
             setLoading(true);
-            const response = await axios.post('http://localhost:5000/api/auth/signin', {
-                email, 
-                password
-            });
+            const response = await api.post('/auth/signin', { email, password });
 
             const { token, user } = response.data;
 
