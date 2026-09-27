@@ -2,7 +2,7 @@
 
 A full-stack banking web app where users manage accounts and transactions — complete with a secure Role-Based Access Control (RBAC) system, an admin control center, and an upcoming AI-powered spending assistant. Built with the MERN stack and deployed live in production.
 
-> ⚠️ **Note:** This repository represents the stable **v1.0 base version** of Apex Ledger. Continuous updates, advanced features, and performance enhancements are actively being rolled out as per the roadmap below!
+> ⚠️ **Note:** This repository represents the stable **v1.0 base version** of Apex Ledger. Continuous updates, advanced features, and performance enhancements are actively being rolled out soon!
 
 ## Features
 
