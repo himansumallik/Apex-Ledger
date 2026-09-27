@@ -2,6 +2,8 @@
 
 A full-stack banking web app where users manage accounts and transactions — complete with a secure Role-Based Access Control (RBAC) system, an admin control center, and an upcoming AI-powered spending assistant. Built with the MERN stack and deployed live in production.
 
+> ⚠️ **Note:** This repository represents the stable **v1.0 base version** of Apex Ledger. Continuous updates, advanced features, and performance enhancements are actively being rolled out as per the roadmap below!
+
 ## Features
 
 - [x] **User Authentication & Authorization**: Secure JWT-based signup and login with strict server-side role enforcement.
@@ -9,8 +11,8 @@ A full-stack banking web app where users manage accounts and transactions — co
 - [x] **Admin Control Center**: Platform-wide user audits, global account monitoring, and system metrics.
 - [x] **Account Management**: Create checking/savings accounts and view real-time balances.
 - [x] **Transactions**: Secure deposits, withdrawals, and categorized transaction history.
-- [ ] **AI-powered spending assistant**: Ask natural-language questions about your finances.
-- [ ] **Redis caching**: Fast balance & transaction-history reads.
+- [x] **AI-powered spending assistant**: Ask natural-language questions about your finances.
+- [x] **Redis caching**: Fast balance & transaction-history reads.
 
 ## Tech Stack
 
@@ -108,8 +110,8 @@ npm run dev
 - [x] Backend: Account & transaction CRUD
 - [x] Frontend: React UI for auth, accounts, transactions, and Admin Dashboard
 - [x] Deployment: Frontend live on Netlify, backend live on Render
-- [ ] AI chat assistant integration
-- [ ] Redis caching layer
+- [x] AI chat assistant integration
+- [x] Redis caching layer
 
 ## Live Demo
 
