@@ -1,40 +1,36 @@
 # Apex Ledger
 
-A full-stack banking web app where users manage accounts and transactions — and instead of digging through raw transaction lists, they can ask an AI assistant natural-language questions like *"how much did I spend on food last month?"* Built with the MERN stack, with Redis caching for fast, production-realistic reads.
-
-> 🚧 **Status:** Actively in development. See the roadmap below for what's built vs. in progress.
+A full-stack banking web app where users manage accounts and transactions — complete with a secure Role-Based Access Control (RBAC) system, admin control center, and an upcoming AI-powered spending assistant. Built with the MERN stack and deployed live in production.
 
 ## Features
 
-- [x] User authentication (JWT-based signup/login)
-- [x] Account management (create checking/savings accounts, view balance)
-- [x] Transactions (deposit, withdraw, categorized transaction history)
-- [ ] AI-powered spending assistant (ask natural-language questions about your finances)
-- [ ] Redis caching (fast balance & transaction-history reads)
+- [x] **User Authentication & Authorization**: Secure JWT-based signup and login with strict server-side role enforcement.
+- [x] **Role-Based Access Control (RBAC)**: Distinct permissions for standard users and administrators (`user` vs `admin`).
+- [x] **Admin Control Center**: Platform-wide user audits, global account monitoring, and system metrics.
+- [x] **Account Management**: Create checking/savings accounts and view real-time balances.
+- [x] **Transactions**: Secure deposits, withdrawals, and categorized transaction history.
+- [ ] **AI-powered spending assistant**: Ask natural-language questions about your finances.
+- [ ] **Redis caching**: Fast balance & transaction-history reads.
 
 ## Tech Stack
 
-**Frontend:** React
-**Backend:** Node.js, Express
-**Database:** MongoDB
-**Cache:** Redis
-**AI:** External LLM API
+**Frontend:** React (Hosted on Netlify)  
+**Backend:** Node.js, Express (Hosted on Render)  
+**Database:** MongoDB Atlas  
+**Cache:** Redis  
+**Security:** JWT, bcrypt, CORS, RBAC Middleware  
 
 ## Architecture
+React (Netlify Frontend)
+│  HTTP Requests (JSON via Axios + Auth Token)
+▼
+Node/Express (Render Backend API)
+│  API Routes · Controllers · RBAC Middleware · AI Integration
+│
+├──▶ MongoDB Atlas (Database)  — Query/CRUD, user roles, accounts, transactions
+├──▶ External LLM API          — sends prompt/text, receives generated response
+└──▶ Redis (Cache)             — key/value read & write
 
-```
-React (Frontend)
-   │  HTTP Requests (JSON)
-   ▼
-Node/Express (Backend/API)
-   │  API Routes · Controllers · Middleware · AI Integration
-   │
-   ├──▶ MongoDB (Database)       — Query/CRUD, returns JSON docs
-   ├──▶ External LLM API         — sends prompt/text, receives generated response
-   └──▶ Redis (Cache)            — key/value read & write
-```
-
-React talks to the Express backend over HTTP. The backend is the single hub: it queries MongoDB for persistent data, calls the LLM API for AI-generated answers, and reads/writes Redis for cached lookups — then returns a JSON response back to the frontend.
 
 ## Data Model
 
@@ -45,6 +41,7 @@ React talks to the Express backend over HTTP. The backend is the single hub: it 
 | `name` | String | Required |
 | `email` | String | Unique, required, indexed for fast login lookups |
 | `password` | String | Hashed, never stored in plain text |
+| `role` | String | Enum: `'user'` \| `'admin'` (Defaults to `'user'`) |
 | `createdAt` | Date | Account registration timestamp |
 
 ### Account
@@ -53,7 +50,7 @@ React talks to the Express backend over HTTP. The backend is the single hub: it 
 | `_id` | ObjectId | Auto-generated |
 | `userId` | ObjectId | References `User`, required |
 | `accountType` | String | `'checking'` \| `'savings'` |
-| `balance` | Number | Tracked in smallest currency unit (cents/paise) |
+| `balance` | Number | Tracked in currency units |
 | `currency` | String | Default `'USD'` or `'INR'` |
 | `createdAt` | Date | Account creation timestamp |
 
@@ -70,12 +67,12 @@ React talks to the Express backend over HTTP. The backend is the single hub: it 
 
 **Relationships:** One `User` → many `Account`s · One `Account` → many `Transaction`s
 
-## Getting Started
+## Getting Started (Local Development)
 
 ```bash
 # Clone the repo
-git clone https://github.com/himansumallik/Apex-Ledger.git
-cd global-bank-v2
+git clone [https://github.com/himansumallik/Apex-Ledger.git](https://github.com/himansumallik/Apex-Ledger.git)
+cd Apex-Ledger
 
 # Install backend dependencies
 cd server
@@ -83,25 +80,38 @@ npm install
 
 # Set up environment variables
 cp .env.example .env
-# Fill in: MONGO_URI, JWT_SECRET, LLM_API_KEY, REDIS_URL
+# Fill in: MONGO_URI, JWT_SECRET, LLM_API_KEY, REDIS_URL, PORT
 
-# Run the server
+# Run the backend server
 npm start
-```
 
-## Roadmap
+# In a separate terminal, set up and run the frontend
+cd client
+npm install
+# Configure VITE_API_URL=http://localhost:5000/api in a .env file
+npm run dev
+Roadmap
+[x] Product brief & MVP scoping
 
-- [x] Product brief & MVP scoping
-- [x] Architecture design
-- [x] Data model design
-- [x] Backend: Express server + MongoDB connection
-- [x] Backend: Auth (signup/login)
-- [x] Backend: Account & transaction CRUD
-- [ ] Frontend: React UI for auth, accounts, transactions
-- [ ] AI chat assistant integration
-- [ ] Redis caching layer
-- [ ] Deployment (live demo link)
+[x] Architecture design
 
-## Live Demo
+[x] Data model design
 
-_Coming soon._
+[x] Backend: Express server + MongoDB connection
+
+[x] Backend: Auth (signup/login) with RBAC & Admin middleware
+
+[x] Backend: Account & transaction CRUD
+
+[x] Frontend: React UI for auth, accounts, transactions, and Admin Dashboard
+
+[x] Deployment: Frontend live on Netlify, Backend live on Render
+
+[ ] AI chat assistant integration
+
+[ ] Redis caching layer
+
+Live Demo
+Frontend Application: https://apexledgerlive.netlify.app
+
+Backend API: https://apex-ledger-backend.onrender.com
