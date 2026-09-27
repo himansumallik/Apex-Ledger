@@ -15,7 +15,6 @@ export const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submit triggered! Payload:", { email, password });
 
         try {
             setLoading(true);
@@ -33,11 +32,6 @@ export const Login = () => {
                 navigate('/dashboard');
             }
         } catch (err) {
-            console.dir(err);
-            console.log("Status code:", err.response?.status);
-            console.log("Server response:", err.response?.data);
-            console.log("Error message:", err.message);
-            
             const errMsg = err.response?.data?.message || err.message || 'Login failed';
             setError(errMsg); 
         } finally {

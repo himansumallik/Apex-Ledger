@@ -83,10 +83,10 @@ npm install
 
 # Set up environment variables
 cp .env.example .env
-# Fill in: MONGODB_URI, JWT_SECRET, LLM_API_KEY, REDIS_URL
+# Fill in: MONGO_URI, JWT_SECRET, LLM_API_KEY, REDIS_URL
 
 # Run the server
-npm run dev
+npm start
 ```
 
 ## Roadmap
